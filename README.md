@@ -3,7 +3,6 @@
 > Uma Landing Page imersiva e interativa desenvolvida para unificar o ecossistema de empresas do RF Group.
 
 ![Project Preview](https://via.placeholder.com/1200x600?text=Preview+do+Site) 
-*(Substitua este link por um print ou GIF real do seu site)*
 
 ## 📖 Sobre o Projeto
 
