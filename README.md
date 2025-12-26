@@ -1,10 +1,4 @@
-Aqui está uma proposta completa e profissional de README.md para o seu repositório. Ela destaca as tecnologias modernas que utilizamos (GSAP, Particles, Lenis) e o conceito do projeto.
-
-Você pode copiar e colar diretamente no arquivo README.md do seu GitHub.
-
-Markdown
-
-# 🌐 RF Group - Corporate Hub
+# 🌐 RF Group 
 
 > Uma Landing Page imersiva e interativa desenvolvida para unificar o ecossistema de empresas do RF Group.
 
