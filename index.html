@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RF Group </title>
+    <title>RF Group</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -25,73 +25,32 @@
             --white: #ffffff;
             --glass-border: rgba(255, 255, 255, 0.15);
         }
-/* CSS GERAL DO PRELOADER */
-#preloader {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #ffffff;
-    z-index: 99999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 0.5s ease-out;
-}
 
-/* Container para empilhar os SVGs */
-.svg-wrapper {
-    position: relative;
-    width: 300px; /* Largura da logo - Ajuste conforme necessário */
-    height: 84px; /* Altura proporcional */
-}
+        /* --- PRELOADER --- */
+        #preloader {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ffffff; z-index: 99999;
+            display: flex; justify-content: center; align-items: center;
+            transition: opacity 0.5s ease-out;
+        }
+        .svg-wrapper { position: relative; width: 300px; height: 84px; }
+        .svg-layer { position: absolute; top: 0; left: 0; width: 100%; height: auto; }
+        
+        /* Ajustei tempos para sincronizar melhor */
+        .svg-fill { opacity: 0; animation: fade-in-fill 0.5s ease-in-out forwards; animation-delay: 1.2s; }
+        
+        .svg-outline path, .svg-outline polygon, .svg-outline rect {
+            fill: none !important; stroke: #5F0006; stroke-width: 40px; /* Ajustado espessura */
+            stroke-dasharray: 40000; stroke-dashoffset: 40000;
+            animation: draw-stroke 3.5s ease-in-out forwards;
+        }
+        
+        @keyframes draw-stroke { 0% { stroke-dashoffset: 40000; opacity: 1;} 80% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+        @keyframes fade-in-fill { to { opacity: 1; } }
 
-/* Estilo comum para ambas as camadas */
-.svg-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: auto;
-}
-
-/* --- CAMADA 1: PREENCHIMENTO ORIGINAL (Fundo) --- */
-.svg-fill {
-    opacity: 0; /* Começa invisível */
-    animation: fade-in-fill 0.5s ease-in-out forwards;
-    animation-delay: 2.5s; /* Aparece logo após o desenho completar */
-}
-
-/* --- CAMADA 2: CONTORNO (Frente) --- */
-/* Forçamos o stroke e removemos o fill do SVG original */
-.svg-outline path,
-.svg-outline polygon,
-.svg-outline rect {
-    fill: none !important; /* Remove o preenchimento (Crucial) */
-    stroke: #5F0006; /* Cor do contorno (Vinho/Vermelho Escuro) */
-    stroke-width: 20px; /* Grossura do contorno */
-    stroke-dasharray: 30000; /* Aumentei para garantir cobertura do path longo */
-    stroke-dashoffset: 30000; /* Esconde o traço inicialmente */
-    
-    /* Animação do desenho */
-    animation: draw-stroke 7.2s ease-in-out forwards;
-}
-
-/* --- KEYFRAMES (As Animações) --- */
-
-@keyframes draw-stroke {
-    0% { stroke-dashoffset: 30000; opacity: 1;}
-    80% { stroke-dashoffset: 0; opacity: 1; } /* Desenho completo */
-    100% { stroke-dashoffset: 0; opacity: 0; } /* Contorno desaparece */
-}
-
-@keyframes fade-in-fill {
-    to { opacity: 1; }
-}
         body {
-            margin: 0;
-            background-color: var(--c-white-bg);
-            color: var(--white);
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
+            margin: 0; background-color: var(--c-white-bg); color: var(--white);
+            font-family: 'Inter', sans-serif; overflow-x: hidden;
         }
 
         h1, h2, h3, .stat-num { font-family: 'Montserrat', sans-serif; }
@@ -100,52 +59,68 @@
         nav {
             position: fixed; top: 0; width: 100%; padding: 1.5rem 3rem;
             display: flex; justify-content: flex-end; align-items: center;
-            z-index: 100; mix-blend-mode: difference;
-            transition: all 0.3s ease;
+            z-index: 100; mix-blend-mode: difference; transition: all 0.3s ease;
         }
         nav a { color: white; text-decoration: none; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
 
         /* --- HERO SECTION --- */
-        .hero {
-            height: 100vh; width: 100%; position: relative;
-            overflow: hidden; background: var(--c-white-bg);
-        }
-
+        .hero { height: 100vh; width: 100%; position: relative; overflow: hidden; background: var(--c-white-bg); }
         #particles-js { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; }
-
         .hero-logo {
-            position: absolute; z-index: 2;
-            top: 38%; 
-            left: 50%; 
+            position: absolute; z-index: 2; top: 38%; left: 50%;
             transform: translate(-50%, -50%) translateY(30px);
-            width: 98vw; 
-            max-width: 900px; 
-            object-fit: contain; opacity: 0; 
+            width: 98vw; max-width: 900px; object-fit: contain; opacity: 0;
             filter: drop-shadow(0 30px 60px rgba(0,0,0,0.1));
         }
-
         .hero-desc {
-            position: absolute; z-index: 3;
-            bottom: 15%; 
-            left: 50%; transform: translateX(-50%) translateY(20px);
-            width: 90%; 
-            max-width: 800px;
-            color: #1a1a1a; 
-            text-align: center; 
-            font-size: 1.35rem;
-            line-height: 1.6; 
-            font-weight: 500;
-            opacity: 0; 
-            text-shadow: 0 10px 30px rgba(255,255,255,0.8); 
+            position: absolute; z-index: 3; bottom: 15%; left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            width: 90%; max-width: 800px; color: #1a1a1a; text-align: center;
+            font-size: 1.35rem; line-height: 1.6; font-weight: 500;
+            opacity: 0; text-shadow: 0 10px 30px rgba(255,255,255,0.8);
         }
-
         .scroll-hint {
             position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-            color: #000; z-index: 4;
-            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;
+            color: #000; z-index: 4; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;
             opacity: 0.5; animation: fadeUp 2s infinite;
         }
         @keyframes fadeUp { 0%, 100% { bottom: 30px; opacity: 0.5; } 50% { bottom: 20px; opacity: 0.2; } }
+
+        /* --- NOVA SEÇÃO: QUEM SOMOS (COM PARALLAX) --- */
+        .about-section {
+            position: relative; height: 100vh; width: 100%;
+            display: flex; align-items: center; justify-content: center; /* Centralizado */
+            overflow: hidden;
+            background-color: #000;
+        }
+        
+        /* ESTILO NOVO PARA IMAGEM PARALLAX */
+        .bg-image {
+            position: absolute; 
+            top: 0; left: 0; 
+            width: 100%; 
+            height: 120%; /* Altura maior para permitir o movimento */
+            object-fit: cover; 
+            z-index: 0; 
+            opacity: 0.6;
+            will-change: transform; /* Otimização de performance */
+        }
+
+        .about-card {
+            position: relative; z-index: 2;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 4rem; border-radius: 20px;
+            max-width: 900px; width: 90%; text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        .about-card h2 {
+            font-size: 3rem; margin-bottom: 1.5rem; letter-spacing: -1px;
+        }
+        .about-card p {
+            font-size: 1.2rem; line-height: 1.7; opacity: 0.9;
+        }
 
         /* --- SEÇÕES PADRÃO --- */
         .main-content { position: relative; z-index: 5; }
@@ -163,14 +138,9 @@
         .theme-icon { width: 60px; height: 60px; margin-bottom: 20px; opacity: 0.9; color: white; }
         .theme-icon svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
-        /* Stats Grid Responsivo */
-        .stats-grid { 
-            display: flex; gap: 40px; margin-bottom: 35px; 
-            border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px; 
-            flex-wrap: wrap; 
-        }
+        .stats-grid { display: flex; gap: 40px; margin-bottom: 35px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px; flex-wrap: wrap; }
         .stat-item { display: flex; flex-direction: column; }
-        .stat-num { font-size: 2rem; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; /* Evita que o número "dance" */ }
+        .stat-num { font-size: 2rem; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; }
         .stat-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; margin-top: 5px; }
 
         .visual-col { position: relative; height: 80vh; border-radius: 20px; overflow: hidden; }
@@ -187,84 +157,54 @@
         .reversed { direction: rtl; }
         .reversed .info-col { direction: ltr; }
 
-        /* --- BOTÃO GLOBAL --- */
         .cta-btn {
-            position: relative; z-index: 10;
-            display: inline-flex; align-items: center; gap: 10px; padding: 18px 45px;
-            
-            background-color: #ffffff !important; 
-            color: #000000 !important;
-            border: 2px solid #ffffff !important;
-            
-            border-radius: 100px; 
+            position: relative; z-index: 10; display: inline-flex; align-items: center; gap: 10px; padding: 18px 45px;
+            background-color: #ffffff !important; color: #000000 !important;
+            border: 2px solid #ffffff !important; border-radius: 100px; 
             text-decoration: none; font-weight: 700; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px;
             transition: transform 0.3s ease, box-shadow 0.3s ease; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            opacity: 1; cursor: pointer;
-            box-sizing: border-box;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2); opacity: 1; cursor: pointer; box-sizing: border-box;
         }
-        .cta-btn:hover { 
-            background-color: #f2f2f2 !important; transform: translateY(-5px) scale(1.05); 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3); 
-        }
+        .cta-btn:hover { background-color: #f2f2f2 !important; transform: translateY(-5px) scale(1.05); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
         .cta-btn span { color: #000000 !important; }
 
-        /* --- SEÇÃO DE CONTATO --- */
-        .contact-grid {
-            display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem;
-            width: 100%; max-width: 1200px; margin: 0 auto;
-            padding: 0 5vw;
-        }
-
+        .contact-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 5vw; }
         .contact-form { display: flex; flex-direction: column; gap: 20px; }
         .form-input {
-            width: 100%; padding: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: white; font-family: 'Inter', sans-serif; font-size: 1rem;
-            transition: all 0.3s ease;
+            width: 100%; padding: 20px; background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px;
+            color: white; font-family: 'Inter', sans-serif; font-size: 1rem; transition: all 0.3s ease;
         }
         .form-input:focus { outline: none; border-color: rgba(255, 255, 255, 0.5); background: rgba(255, 255, 255, 0.08); }
         textarea.form-input { min-height: 150px; resize: vertical; }
-
         .talent-col {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            display: flex; flex-direction: column; justify-content: center;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px; padding: 40px; display: flex; flex-direction: column; justify-content: center;
         }
         .talent-col h3 { margin-top: 0; font-size: 2rem; }
         .talent-email { margin-top: 20px; opacity: 0.6; font-size: 0.9rem; }
         .talent-email a { color: white; text-decoration: underline; }
 
-        /* --- RESPONSIVIDADE --- */
         @media (max-width: 1024px) {
             .hero-logo { width: 90vw; }
             .info-col h3 { font-size: 3rem; }
         }
-
         @media (max-width: 768px) {
             nav { padding: 1rem 1.5rem; justify-content: center; }
-            
-            .hero-logo { width: 95vw; top: 30%; }
+            .hero-logo { width: 95vw; top: 35%; }
             .hero-desc { bottom: 10%; font-size: 0.95rem; width: 90%; line-height: 1.5; }
-
             .company-section, .contact-grid { grid-template-columns: 1fr; text-align: center; padding: 0 5vw; gap: 3rem; }
             .reversed { direction: ltr; }
-            
             .info-col p { margin: 0 auto 30px auto; max-width: 100%; }
             .info-col h3 { font-size: 2.2rem; }
-            
             .stats-grid { justify-content: center; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-            
             .visual-col { height: 50vh; margin-top: 0; }
             .theme-icon { margin: 0 auto 20px auto; }
-            
             .talent-col { text-align: center; padding: 30px 20px; }
-            
             .cta-btn { padding: 16px 30px; width: 100%; justify-content: center; white-space: normal; }
+            .about-card { padding: 2rem; width: 95%; }
+            .about-card h2 { font-size: 2rem; }
+            .about-card p { font-size: 1rem; }
         }
     </style>
 </head>
@@ -272,15 +212,11 @@
 
 <div id="preloader">
     <div class="svg-wrapper">
-        
         <svg class="svg-layer svg-fill" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 10076.17 2829.39" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd">
              <defs>
               <style type="text/css">
                <![CDATA[
-                .fil2 {fill:#1A2253}
-                .fil1 {fill:#5F0006}
-                .fil3 {fill:#737373}
-                .fil0 {fill:#5F0006;fill-rule:nonzero}
+                .fil2 {fill:#1A2253} .fil1 {fill:#5F0006} .fil3 {fill:#737373} .fil0 {fill:#5F0006;fill-rule:nonzero}
                ]]>
               </style>
              </defs>
@@ -304,7 +240,7 @@
                <path class="fil1" d="M3569.33 808.81c42.73,341.92 -347.41,592.37 -648.81,638.35 0,0 148.16,125.29 251.41,269.83 103.25,144.55 218.64,387.48 267.23,489.52 48.59,102.04 250.31,381.58 250.31,381.58l-6.06 -1781.93c0,0 0.01,2.27 -114.07,2.65zm0.79 392.32l2.42 1007.47c0,0 -269.31,-577.75 -444.94,-721.12 10.75,-17.92 329.74,-103.94 442.52,-286.35z"/>
              </g>
         </svg>
-
+        
         <svg class="svg-layer svg-outline" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 10076.17 2829.39" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd">
              <g id="Camada_Outline">
                <path class="fil0" d="M8946.35 851.91l0 338.15 -25.42 0c-8.24,-64.97 -23.07,-116.66 -44.49,-155.05 -21.42,-38.39 -52.02,-68.91 -91.8,-91.55 -39.54,-22.64 -80.5,-33.96 -122.87,-33.96 -48.02,0 -87.57,15.26 -118.87,45.78 -31.31,30.52 -47.08,65.46 -47.08,104.35 0,29.78 9.89,57.1 29.66,81.71 28.72,35.93 96.51,84.17 203.84,144.22 87.56,49.22 147.35,86.88 179.36,112.96 32.01,26.33 56.73,57.1 73.91,92.78 17.18,35.69 25.9,72.85 25.9,111.98 0,74.08 -27.54,137.82 -82.38,191.48 -55.08,53.65 -125.93,80.48 -212.32,80.48 -27.31,0 -52.73,-2.22 -76.74,-6.65 -14.36,-2.46 -43.78,-11.32 -88.74,-26.58 -44.73,-15.26 -73.21,-22.89 -85.21,-22.89 -11.53,0 -20.71,3.69 -27.3,10.83 -6.59,7.38 -11.53,22.4 -14.83,45.29l-25.42 0 0 -335.2 25.42 0c12.01,70.14 28.01,122.81 48.26,157.51 20.24,34.95 51.31,63.99 92.97,86.88 41.67,23.13 87.33,34.7 137,34.7 57.43,0 103.1,-16 136.28,-47.75 33.42,-31.99 50.13,-69.65 50.13,-112.96 0,-24.12 -6.35,-48.48 -18.83,-73.09 -12.71,-24.61 -32.25,-47.5 -58.85,-68.91 -17.89,-14.52 -67.08,-45.04 -147.35,-91.8 -80.27,-46.51 -137.46,-83.92 -171.36,-111.73 -33.89,-27.81 -59.79,-58.82 -77.21,-92.29 -17.65,-33.72 -26.36,-70.88 -26.36,-111.24 0,-70.14 25.89,-130.68 77.44,-181.38 51.55,-50.7 117.45,-76.05 197.02,-76.05 49.9,0 102.63,12.8 158.41,38.15 25.89,12.06 44.02,17.96 54.61,17.96 12.01,0 21.89,-3.69 29.42,-11.07 7.53,-7.63 13.65,-22.4 18.36,-45.04l25.42 0z"/>
@@ -329,6 +265,10 @@
     </div>
 </div>
 
+    <nav>
+        <a href="#">MENU</a>
+    </nav>
+
     <section class="hero" data-color="#fcfcfc">
         <div id="particles-js"></div>
         <img src="group.png" class="hero-logo" alt="RF Group Logo Oficial">
@@ -340,6 +280,17 @@
 
     <div class="main-content">
         
+        <div class="section-wrapper" data-color="#000000">
+            <section class="about-section">
+                <img src="./fundo2.jpeg" alt="Fundo Quem Somos" class="bg-image">
+                
+                <div class="about-card">
+                    <h2>Quem Somos</h2>
+                    <p>O RF Group é um ecossistema empresarial que reúne inovação, solidez e visão estratégica. Formado por empresas que atuam em diferentes segmentos: gestão imobiliária, soluções empresariais, assessoria jurídica e eventos de negócios.</p>
+                </div>
+            </section>
+        </div>
+
         <div class="section-wrapper" data-color="var(--c-law)">
             <section class="company-section" id="sec-law">
                 <div class="info-col">
@@ -349,14 +300,13 @@
                     </div>
                     <h3>R.Feitosa<br>Advogados e Associados</h3>
                     <p>A RFeitosa Advogados é o núcleo jurídico do ecossistema RF Group, unindo técnica, estratégia e clareza para transformar desafios legais em soluções inteligentes. Com atuação nas áreas trabalhista, cível, tributária, empresarial e consultiva, o escritório destaca-se por entregar segurança jurídica aplicada e alinhada à realidade de cada cliente.</p>
-                    
                     <div class="stats-grid">
                         <div class="stat-item"><span class="stat-num">+15</span><span class="stat-label">Anos de XP</span></div>
                         <div class="stat-item"><span class="stat-num">+5000</span><span class="stat-label">Casos Êxito</span></div>
                         <div class="stat-item"><span class="stat-num">+1.8BI</span><span class="stat-label">Gestão em Ativos</span></div>
+                        <div class="stat-item"><span class="stat-num">+300</span><span class="stat-label">Empresas sob Gestão</span></div>
                     </div>
-
-                    <a href="#" target="_blank" class="cta-btn">Visitar Site <span>→</span></a>
+                    <a href="https://www.rfeitosa.com.br" target="_blank" class="cta-btn">Visitar Site <span>→</span></a>
                 </div>
                 <div class="visual-col"><div class="glass-card"><img src="adv (2).png" class="brand-img" alt="Advogados"></div></div>
             </section>
@@ -371,14 +321,12 @@
                     </div>
                     <h3>Connect<br>Valley</h3>
                     <p>A Connect Valley é o braço de eventos e networking do RF Group, responsável por criar experiências que inspiram empreendedores, movimentam o ecossistema regional e posicionam o Norte do Ceará como polo de inovação e negócios. Com conteúdo, impacto e propósito, o Connect transforma cada edição em um ponto de virada para quem quer ir além.</p>
-                    
                     <div class="stats-grid">
                         <div class="stat-item"><span class="stat-num">+800</span><span class="stat-label">Participantes.</span></div>
                         <div class="stat-item"><span class="stat-num">+80</span><span class="stat-label">Patrocinadores.</span></div>
                         <div class="stat-item"><span class="stat-num">+15.M</span><span class="stat-label">Em negócios.</span></div>
                     </div>
-
-                    <a href="#" target="_blank" class="cta-btn">Visitar Site <span>→</span></a>
+                    <a href="https://www.connectvalley.com.br" target="_blank" class="cta-btn">Visitar Site <span>→</span></a>
                 </div>
                 <div class="visual-col"><div class="glass-card"><img src="conn (1).png" class="brand-img" alt="Connect"></div></div>
             </section>
@@ -393,14 +341,12 @@
                     </div>
                     <h3>Eco<br>Soluções Empresariais</h3>
                     <p>A Eco Soluções Empresariais é o braço estratégico do RF Group, especializada em consultoria tributária, jurídica e empresarial. Com foco em performance, eficiência e redução de custos, a empresa atua ao lado de líderes e organizações que buscam crescer com segurança, planejamento e inteligência corporativa. Cada solução é construída com técnica, análise profunda e visão de futuro.</p>
-                    
                     <div class="stats-grid">
-                        <div class="stat-item"><span class="stat-num">100%</span><span class="stat-label">Gestão positiva</span></div>
+                        <div class="stat-item"><span class="stat-num">100%</span><span class="stat-label">Gestão Positiva</span></div>
                         <div class="stat-item"><span class="stat-num">+150</span><span class="stat-label">Empresas Reestruturadas</span></div>
                         <div class="stat-item"><span class="stat-num">+300</span><span class="stat-label">Empresas sob Gestão</span></div>
                     </div>
-
-                    <a href="#" target="_blank" class="cta-btn">Visitar Site <span>→</span></a>
+                    <a href="https://www.ecosolucoes.com.br" target="_blank" class="cta-btn">Visitar Site <span>→</span></a>
                 </div>
                 <div class="visual-col"><div class="glass-card"><img src="eco.png" class="brand-img" alt="Eco"></div></div>
             </section>
@@ -415,13 +361,11 @@
                     </div>
                     <h3>Feitosa<br>Imóveis</h3>
                     <p>A Feitosa Imóveis atua com foco em locação e administração de imóveis, oferecendo atendimento humano, processos claros e segurança em cada etapa. Com experiência no mercado e um modelo de gestão que prioriza confiança e agilidade, a empresa se destaca por conectar pessoas aos espaços certos e cuidar do patrimônio com responsabilidade.</p>
-                    
                     <div class="stats-grid">
                         <div class="stat-item"><span class="stat-num">+15</span><span class="stat-label">Imóveis</span></div>
                         <div class="stat-item"><span class="stat-num">+400</span><span class="stat-label">Hospedes</span></div>
                     </div>
-
-                    <a href="#" target="_blank" class="cta-btn">Visitar Site <span>→</span></a>
+                    <a href="https://www.feitosaimoveis.com.br" target="_blank" class="cta-btn">Visitar Site <span>→</span></a>
                 </div>
                 <div class="visual-col"><div class="glass-card"><img src="imov.png" class="brand-img" alt="Imóveis"></div></div>
             </section>
@@ -448,13 +392,13 @@
                         <h3>Banco de Talentos</h3>
                         <p style="opacity: 0.8; margin-bottom: 30px; line-height: 1.6;">Quer fazer parte de um ecossistema inovador? Estamos sempre em busca de novos talentos para o RF Group.</p>
                         
-                        <a href="#" target="_blank" class="cta-btn" style="width: 100%; max-width: 100%; justify-content: center; box-sizing: border-box;">
+                        <a href="https://plataforma-talentos.com" target="_blank" class="cta-btn" style="width: 100%; max-width: 100%; justify-content: center; box-sizing: border-box;">
                             Cadastrar Currículo
                         </a>
 
                         <div class="talent-email">
                             Ou envie um e-mail para:<br>
-                            <a href="mailto:rh@rfgroup.com.br">rh@rfeitosa.com.br</a>
+                            <a href="mailto:rh@rfeitosa.com.br">rh@rfeitosa.com.br</a>
                         </div>
                     </div>
 
@@ -469,18 +413,17 @@
     </section>
 
     <script>
-/* JS PARA CONTROLAR O FIM DO LOAD */
-window.addEventListener("load", function() {
-    const loader = document.getElementById("preloader");
-    
-    // Tempo total da animação (3.2s)
-    setTimeout(function() {
-        loader.style.opacity = "0"; // Fade out da tela branca
-        setTimeout(function() {
-            loader.style.display = "none"; // Remove do HTML
-        }, 500); 
-    }, 3200); 
-});
+        /* JS PARA CONTROLAR O FIM DO LOAD (TEMPO AUMENTADO PARA A ANIMAÇÃO COMPLETAR) */
+        window.addEventListener("load", function() {
+            const loader = document.getElementById("preloader");
+            
+            // Aguarda 5 segundos (tempo suficiente para desenhar + preencher)
+            setTimeout(function() {
+                loader.style.opacity = "0"; 
+                setTimeout(function() { loader.style.display = "none"; }, 800); 
+            }, 2000); 
+        });
+
         const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true });
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
@@ -511,7 +454,32 @@ window.addEventListener("load", function() {
         heroTl.to(".hero-logo", { opacity: 1, y: "-50%", duration: 1.5, ease: "power3.out", delay: 0.2 })
               .to(".hero-desc", { opacity: 1, y: 0, duration: 1, ease: "power2.out" }, "-=0.8");
 
-        // Cores de Fundo       
+        // --- ANIMAÇÃO DE IMAGEM PARALLAX ---
+        gsap.to(".bg-image", {
+            yPercent: 20, 
+            scale: 1.1,   
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".about-section",
+                start: "top bottom", 
+                end: "bottom top",
+                scrub: true
+            }
+        });
+
+        // --- ANIMAÇÃO DE ENTRADA DO CARD ---
+        gsap.from(".about-card", {
+            y: 100,
+            opacity: 0,
+            duration: 1.2,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: ".about-section",
+                start: "top 75%" 
+            }
+        });
+
+        // Cores de Fundo
         document.querySelectorAll('.section-wrapper, .hero').forEach(wrap => {
             if(!wrap.dataset.color) return;
             ScrollTrigger.create({
@@ -558,39 +526,27 @@ window.addEventListener("load", function() {
         tlEco.from(".icon-eco .eco-stem", { scaleY: 0, transformOrigin: "bottom", duration: 0.6, ease: "power2.out" })
              .from(".icon-eco .eco-leaf", { scale: 0, transformOrigin: "bottom center", duration: 0.8, ease: "back.out(1.5)" }, "-=0.3");
 
-        // --- ANIMAÇÃO DE CONTAGEM DE NÚMEROS ---
+        // Animação de Números
         gsap.utils.toArray(".stat-num").forEach(el => {
             let rawText = el.innerText; 
-            // Regex simples para pegar o número principal (suporta decimais 1.8 ou inteiros 5000)
             let numberMatch = rawText.match(/[\d\.]+/); 
-            
             if(numberMatch) {
                 let originalVal = parseFloat(numberMatch[0]);
                 let prefix = rawText.split(numberMatch[0])[0];
                 let suffix = rawText.split(numberMatch[0])[1];
-                
                 let obj = { val: 0 };
-                
                 gsap.to(obj, {
                     val: originalVal,
                     duration: 2,
                     ease: "power2.out",
-                    scrollTrigger: {
-                        trigger: el,
-                        start: "top 85%"
-                    },
+                    scrollTrigger: { trigger: el, start: "top 85%" },
                     onUpdate: function() {
-                        // Se for inteiro, arredonda. Se for decimal (ex: 1.8), mantém 1 casa.
-                        let formatted = Number.isInteger(originalVal) 
-                            ? Math.round(obj.val) 
-                            : obj.val.toFixed(1); 
-                        
+                        let formatted = Number.isInteger(originalVal) ? Math.round(obj.val) : obj.val.toFixed(1); 
                         el.innerText = prefix + formatted + suffix;
                     }
                 });
             }
         });
-
     </script>
 </body>
 </html>
